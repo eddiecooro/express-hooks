@@ -1,0 +1,21 @@
+{
+  "name": "express-hooks",
+  "version": "0.0.1",
+  "description": "Custom hooks for use in express apps",
+  "main": "index.js",
+  "scripts": {
+    "start": "",
+    "dev": ""
+  },
+  "author": "Eddie CooRo <eddiecooro@gmail.com>",
+  "contributors": [
+    "Eddie CooRo <eddiecooro@gmail.com>",
+    "Ali Fk <alichfc@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": false,
+  "peerDependencies": {
+    "express": "^4.0.0"
+  },
+  "devDependencies": {}
+}

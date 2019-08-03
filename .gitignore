@@ -28,3 +28,6 @@ benchmarks/graphs
 
 # VSCODE
 .vscode
+
+# Custom
+dist

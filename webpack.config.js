@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const WebpackShellPlugin = require('webpack-shell-plugin');
 const nodeExternals = require('webpack-node-externals');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -32,9 +33,10 @@ const config = {
 if (process.env.NODE_ENV !== 'production') {
   config.plugins.push(
     new WebpackShellPlugin({
-      onBuildEnd: ['nodemon dist/index.js --watch build']
+      onBuildEnd: ['nodemon dist/index.js --watch dist']
     }),
-    new webpack.BannerPlugin('require("source-map-support").install();', {
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
       raw: true,
       entryOnly: false
     })
@@ -60,4 +62,4 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-export default config;
+module.exports = config;

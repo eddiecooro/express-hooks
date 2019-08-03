@@ -4,7 +4,7 @@
   "description": "Custom hooks for use in express apps",
   "main": "dist/index.js",
   "scripts": {
-    "start": "webpack --watch",
+    "start": "webpack --mode development --watch",
     "test": "jest",
     "build": "webpack --mode production"
   },
@@ -39,6 +39,7 @@
     "webpack-cli": "^3.3.6",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "webpack-shell-plugin": "^0.5.0"
   }
 }

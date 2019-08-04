@@ -1,4 +1,4 @@
-import { resolveDispatcher } from './utils';
+import { resolveDispatcher } from './CurrentDispatcher';
 
 export function useParam(paramName, defaultValue) {
 	const req = useReq();

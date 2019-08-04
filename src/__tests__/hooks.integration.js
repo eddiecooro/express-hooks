@@ -1,36 +1,40 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq } from '../Hooks';
+import { useRes, useReq, useParam } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let app;
-	let testRequestHandler;
 	beforeEach(() => {
 		const express = require('express');
 		app = express();
 		app.use(expressMiddleware);
-
-		testRequestHandler = function(requestHandler) {
-			app.get('/', (req, res, next) => {
-				requestHandler(req, res, next);
-			});
-			return request(app).get('/');
-		};
 	});
 
 	it('useRes', () => {
-		return testRequestHandler((_, res) => {
+		app.get('/', (_, res) => {
 			const middlewareRes = useRes();
-			res.end();
 			expect(middlewareRes).toBe(res);
+			res.end();
 		});
+		return request(app).get('/');
 	});
 
 	it('useReq', () => {
-		return testRequestHandler((req, res) => {
+		app.get('/', (req, res) => {
 			const middlewareReq = useReq();
-			res.end();
 			expect(middlewareReq).toBe(req);
+			res.end();
 		});
+		return request(app).get('/');
+	});
+
+	it('useParam', () => {
+		const name = 'Eddie';
+		app.get('/:name', (_, res) => {
+			const nameParam = useParam('name');
+			expect(nameParam).toMatch(name);
+			res.end();
+		});
+		return request(app).get(`/${name}`);
 	});
 });

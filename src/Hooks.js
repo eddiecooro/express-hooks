@@ -9,3 +9,7 @@ export function useRes() {
   return dispatcher._res;
 }
 
+export function useReq() {
+  const dispatcher = resolveDispatcher();
+  return dispatcher._req;
+}

@@ -17,4 +17,20 @@ describe('Runs correctly when integrates with express', () => {
 			return request(app).get('/');
 		};
 	});
+
+	it('useRes', () => {
+		return testRequestHandler((_, res) => {
+			const middlewareRes = useRes();
+			res.end();
+			expect(middlewareRes).toBe(res);
+		});
+	});
+
+	it('useReq', () => {
+		return testRequestHandler((req, res) => {
+			const middlewareReq = useReq();
+			res.end();
+			expect(middlewareReq).toBe(req);
+		});
+	});
 });

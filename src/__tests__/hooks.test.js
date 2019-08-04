@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq } from '../Hooks';
+import { useParam, useRes, useReq, useBaseUrl } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -41,6 +41,18 @@ describe('hooks', () => {
 
 		it("Returns the default value if the specified param doesn't exist", () => {
 			expect(useParam('Hello', 'Cooro')).toMatch('Cooro');
+		});
+	});
+
+	describe('useBaseUrl', () => {
+		it('Returns the correct base url', () => {
+			const baseUrl = '/Eddie';
+			setDispatcher({
+				_req: {
+					baseUrl,
+				},
+			});
+			expect(useBaseUrl()).toMatch(baseUrl);
 		});
 	});
 });

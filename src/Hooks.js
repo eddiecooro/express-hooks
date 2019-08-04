@@ -14,3 +14,8 @@ export function useReq() {
 	const dispatcher = resolveDispatcher();
 	return dispatcher._req;
 }
+
+export function useBaseUrl() {
+	const req = useReq();
+	return req.baseUrl;
+}

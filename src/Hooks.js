@@ -14,3 +14,8 @@ export function useReq() {
 	const dispatcher = resolveDispatcher();
 	return dispatcher._req;
 }
+
+export function useHostName() {
+	const req = useReq();
+	return req.hostname;
+}

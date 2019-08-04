@@ -1,12 +1,12 @@
-import CurrentDispatcher from './CurrentDispatcher';
+import { setDispatcher } from './CurrentDispatcher';
 
 const expressMiddleware = (req, res, next) => {
-	CurrentDispatcher.current = {
+	setDispatcher({
 		_req: req,
 		_res: res,
-	};
+	});
 	next();
-	CurrentDispatcher.current = null;
+	setDispatcher(null);
 };
 
 export default expressMiddleware;

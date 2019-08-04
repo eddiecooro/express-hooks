@@ -1,5 +1,5 @@
 let CurrentDispatcher = {
-  current: null
+	current: null,
 };
 
 export default CurrentDispatcher;

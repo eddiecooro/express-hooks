@@ -2,7 +2,7 @@ import expressMiddleware from '../index';
 import request from 'supertest';
 import { useRes, useReq } from '../Hooks';
 
-describe('Runs correctly when integrates with express', () => {
+describe('Hook runs correctly when integrates with express', () => {
 	let app;
 	let testRequestHandler;
 	beforeEach(() => {

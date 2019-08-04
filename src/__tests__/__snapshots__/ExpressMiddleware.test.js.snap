@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpressMiddleware removes dispatcher after calling next 1`] = `"Express hooks should be used inside of express handlers or middlewares"`;

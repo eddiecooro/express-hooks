@@ -1,1 +1,3 @@
-console.log('Main');
+import expressMiddleware from './ExpressMiddleware';
+
+export default expressMiddleware;

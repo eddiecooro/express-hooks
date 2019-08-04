@@ -1,6 +1,6 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam } from '../Hooks';
+import { useRes, useReq, useParam, usePath } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let app;
@@ -37,4 +37,15 @@ describe('Hook runs correctly when integrates with express', () => {
 		});
 		return request(app).get(`/${name}`);
 	});
+
+	it.each([['/eddie', '/eddie'], ['/', '/'], ['/:name', '/eddie'], ['/:name', '/']])(
+		'Testing usePath for: %s',
+		(path, reqPath) => {
+			app.get(path, (_, res) => {
+				expect(usePath()).toBe(reqPath);
+				res.end();
+			});
+			return request(app).get(reqPath);
+		},
+	);
 });

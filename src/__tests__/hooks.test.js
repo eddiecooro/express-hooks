@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq } from '../Hooks';
+import { useParam, useRes, useReq, usePath } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -41,6 +41,18 @@ describe('hooks', () => {
 
 		it("Returns the default value if the specified param doesn't exist", () => {
 			expect(useParam('Hello', 'Cooro')).toMatch('Cooro');
+		});
+	});
+
+	describe('usePath', () => {
+		it('Returns the path from the request object', () => {
+			const path = '/ed';
+			setDispatcher({
+				_req: {
+					path,
+				},
+			});
+			expect(usePath()).toBe('/ed');
 		});
 	});
 });

@@ -14,3 +14,8 @@ export function useReq() {
 	const dispatcher = resolveDispatcher();
 	return dispatcher._req;
 }
+
+export function usePath() {
+	const req = useReq();
+	return req.path;
+}

@@ -1,5 +1,5 @@
-import { resolveDispatcher } from '../utils';
 import expressMiddleware from '../ExpressMiddleware';
+import { resolveDispatcher } from '../CurrentDispatcher';
 
 describe('ExpressMiddleware', () => {
 	it('expressMiddleware successfuly sets the dispatcher', () => {

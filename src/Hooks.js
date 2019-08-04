@@ -1,4 +1,4 @@
-import { resolveDispatcher } from './utils';
+import { resolveDispatcher } from './CurrentDispatcher';
 
 // eslint-disable-next-line no-unused-vars
 export function useParam(paramName) {

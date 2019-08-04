@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq } from '../Hooks';
+import { useParam, useRes, useReq, useHostName } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -41,6 +41,18 @@ describe('hooks', () => {
 
 		it("Returns the default value if the specified param doesn't exist", () => {
 			expect(useParam('Hello', 'Cooro')).toMatch('Cooro');
+		});
+	});
+
+	describe('useHostName', () => {
+		it('Returns the hostName from the req object', () => {
+			const hostname = 'eddiehost';
+			setDispatcher({
+				_req: {
+					hostname,
+				},
+			});
+			expect(useHostName()).toMatch(hostname);
 		});
 	});
 });

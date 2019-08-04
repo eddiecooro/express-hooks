@@ -15,4 +15,12 @@ describe('hooks', () => {
     });
   });
 
+  describe('useReq', () => {
+    it('Returns the request object correctly', () => {
+      CurrentDispatcher.current = {
+        _req: 'Req'
+      };
+      expect(useReq()).toMatch('Req');
+    });
+  });
 });

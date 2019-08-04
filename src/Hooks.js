@@ -1,9 +1,8 @@
 import { resolveDispatcher } from './utils';
 
-// eslint-disable-next-line no-unused-vars
-export function useParam(paramName) {
-	// eslint-disable-next-line no-unused-vars
-	const dispatcher = resolveDispatcher();
+export function useParam(paramName, defaultValue) {
+	const req = useReq();
+	return (req.params && req.params[paramName]) || defaultValue;
 }
 
 export function useRes() {

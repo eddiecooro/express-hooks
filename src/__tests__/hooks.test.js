@@ -26,13 +26,13 @@ describe('hooks', () => {
 
 	describe('useParam', () => {
 		beforeEach(() => {
-			CurrentDispatcher.current = {
+			setDispatcher({
 				_req: {
 					params: {
 						name: 'Eddie',
 					},
 				},
-			};
+			});
 		});
 
 		it('Returns the correct param from the request', () => {

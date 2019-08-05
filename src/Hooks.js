@@ -19,3 +19,8 @@ export function usePath() {
 	const req = useReq();
 	return req.path;
 }
+
+export function useMethod() {
+	const req = useReq();
+	return req.method;
+}

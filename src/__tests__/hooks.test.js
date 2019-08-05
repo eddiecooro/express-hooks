@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq, usePath } from '../Hooks';
+import { useParam, useRes, useReq, usePath, useMethod } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -47,12 +47,16 @@ describe('hooks', () => {
 	describe('usePath', () => {
 		it('Returns the path from the request object', () => {
 			const path = '/ed';
-			setDispatcher({
-				_req: {
-					path,
-				},
-			});
+			setDispatcher({ _req: { path } });
 			expect(usePath()).toBe('/ed');
+		});
+	});
+
+	describe('useMethod', () => {
+		it('Returns the method from the request object', () => {
+			const method = 'GET';
+			setDispatcher({ _req: { method } });
+			expect(useMethod()).toBe(method);
 		});
 	});
 });

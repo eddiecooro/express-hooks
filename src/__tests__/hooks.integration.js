@@ -1,6 +1,6 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam, usePath } from '../Hooks';
+import { useRes, useReq, useParam, usePath, useMethod } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let app;
@@ -48,4 +48,12 @@ describe('Hook runs correctly when integrates with express', () => {
 			return request(app).get(reqPath);
 		},
 	);
+
+	it.each([['GET'], ['POST'], ['PUT']])('Testing useMethod for: %s method', method => {
+		app.get('/', (_, res) => {
+			expect(useMethod()).toBe(method);
+			res.end();
+		});
+		return request(app)[method.toLowerCase()]('/');
+	});
 });

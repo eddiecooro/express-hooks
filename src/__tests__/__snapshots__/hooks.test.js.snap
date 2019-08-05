@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`hooks hook throws error when used without dispatcher 1`] = `"Express hooks should be used inside of express handlers or middlewares"`;
+
+exports[`hooks useQuery Throws if the queryName param doesn't gets passed 1`] = `"queryName parameter is required"`;

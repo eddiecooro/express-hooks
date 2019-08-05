@@ -1,6 +1,6 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam, usePath, useMethod } from '../Hooks';
+import { useRes, useReq, useParam, usePath, useMethod, useQuery } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let app;
@@ -55,5 +55,13 @@ describe('Hook runs correctly when integrates with express', () => {
 			res.end();
 		});
 		return request(app)[method.toLowerCase()]('/');
+	});
+
+	it('useQuery', () => {
+		app.get('/', (_, res) => {
+			expect(useQuery('name')).toBe('eddie');
+			res.end();
+		});
+		return request(app).get('/?name=eddie');
 	});
 });

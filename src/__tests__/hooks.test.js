@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq, usePath, useMethod } from '../Hooks';
+import { useParam, useRes, useReq, usePath, useMethod, useQuery } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -57,6 +57,23 @@ describe('hooks', () => {
 			const method = 'GET';
 			setDispatcher({ _req: { method } });
 			expect(useMethod()).toBe(method);
+		});
+	});
+
+	describe('useQuery', () => {
+		beforeEach(() => {
+			setDispatcher({ _req: { query: { name: 'eddie' } } });
+		});
+		it('Returns the query from the request object', () => {
+			expect(useQuery('name')).toBe('eddie');
+		});
+
+		it("Returns default value if the query doesn't exist", () => {
+			expect(useQuery('lastName', 'cooro')).toBe('cooro');
+		});
+
+		it("Throws if the queryName param doesn't gets passed", () => {
+			expect(() => useQuery()).toThrowErrorMatchingSnapshot();
 		});
 	});
 });

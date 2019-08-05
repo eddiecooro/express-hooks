@@ -24,3 +24,9 @@ export function useMethod() {
 	const req = useReq();
 	return req.method;
 }
+
+export function useQuery(queryName, defaultValue) {
+	if (!queryName) throw new Error('queryName parameter is required');
+	const req = useReq();
+	return req.query[queryName] || defaultValue;
+}

@@ -1,6 +1,6 @@
 {
   "name": "@express-hooks/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Custom hooks for use in express apps",
   "main": "dist/index.js",
   "scripts": {
@@ -14,6 +14,7 @@
     "access": "public"
   },
   "author": "Eddie CooRo <eddiecooro@gmail.com>",
+  "repository": "https://github.com/Eddie-CooRo/express-hooks",
   "contributors": [
     "Eddie CooRo <eddiecooro@gmail.com>",
     "Ali Fk <alichfc@gmail.com>"

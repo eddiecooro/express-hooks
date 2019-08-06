@@ -1,6 +1,6 @@
 {
 	"name": "express-hooks",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Custom hooks for use in express apps",
 	"main": "dist/index.js",
 	"scripts": {

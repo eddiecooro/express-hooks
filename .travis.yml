@@ -6,12 +6,26 @@ jobs:
   include:
     - stage: npm release
       node_js: "8"
+      before_deploy: yarn
       deploy:
-        provider: npm
-        email: eddiecooro@gmail.com
-        api_key:
-          secure: QYGE8EXTRIL3JTo09gm+5Ap5p2BYOP/4zqDcrkzR97y0iM9s7MnBl9cmK/faCj5vHmxF+iE6ae+Zib2XlvjFz+7UFxraoCi0t7jSluzZVLdmT7Kf3gMBA7wFSYiym7ZoNYNnRRlgsdqzGtF3FWGEcrQT7coONdW1VabhlXDyRKW6D2XeWczK0j7Fb/+DNtGpf6z1ei+0dEIeag3H9fEmfSpG+MwWrZAMrC+MTnJjD0NOkDPxJb4usNgSifzLNtpzFAhi0PyGtRD3y/2RZJX821IKqDlyxkbkXCpgzIAA/nOrnExOKZliEdTjRHMRP1Vp8O6rTgWNfFM+ZIxl52WAKEAYOv+YpOB2MlQEZ5rZpx5R7YH3ZCcx0gXnw7/8qNwdZyneVW9NtC/HNGOU9N+VBmxTtckqsgTbKSHu3vXJxW5jw8527CmxqwQXkGnO0NjsUX015vvGMGX+V01F4SRrnq89G15cwPDw6huRANFpMOW/+CVvxZj8N/oRKtSnuXQguver55L9DjLVOIISM0qCUTwaDVQX9BOMITSrUYaKWyhTmjn1VCfNrbIKe+uPK9vtlErJm1o9IkWQYMT9TNb0mzOEP1L/efLGrYS8Vd/3Mo5mFUjMmfKUHH/7niVM92ocyZHmNVjc3891BikVSoFtaG2PO33jED1sCurkfPZRizM=
-        on:
-          tags: true
-          branch: master
-          repo: Eddie-CooRo/express-hooks
+        - provider: npm
+          email: eddiecooro@gmail.com
+          api_key:
+            secure: QYGE8EXTRIL3JTo09gm+5Ap5p2BYOP/4zqDcrkzR97y0iM9s7MnBl9cmK/faCj5vHmxF+iE6ae+Zib2XlvjFz+7UFxraoCi0t7jSluzZVLdmT7Kf3gMBA7wFSYiym7ZoNYNnRRlgsdqzGtF3FWGEcrQT7coONdW1VabhlXDyRKW6D2XeWczK0j7Fb/+DNtGpf6z1ei+0dEIeag3H9fEmfSpG+MwWrZAMrC+MTnJjD0NOkDPxJb4usNgSifzLNtpzFAhi0PyGtRD3y/2RZJX821IKqDlyxkbkXCpgzIAA/nOrnExOKZliEdTjRHMRP1Vp8O6rTgWNfFM+ZIxl52WAKEAYOv+YpOB2MlQEZ5rZpx5R7YH3ZCcx0gXnw7/8qNwdZyneVW9NtC/HNGOU9N+VBmxTtckqsgTbKSHu3vXJxW5jw8527CmxqwQXkGnO0NjsUX015vvGMGX+V01F4SRrnq89G15cwPDw6huRANFpMOW/+CVvxZj8N/oRKtSnuXQguver55L9DjLVOIISM0qCUTwaDVQX9BOMITSrUYaKWyhTmjn1VCfNrbIKe+uPK9vtlErJm1o9IkWQYMT9TNb0mzOEP1L/efLGrYS8Vd/3Mo5mFUjMmfKUHH/7niVM92ocyZHmNVjc3891BikVSoFtaG2PO33jED1sCurkfPZRizM=
+          skip_cleanup: true
+          on:
+            tags: true
+            branch: master
+            repo: Eddie-CooRo/express-hooks
+        - provider: npm
+          email: eddiecooro@gmail.com
+          api_key:
+            secure: QYGE8EXTRIL3JTo09gm+5Ap5p2BYOP/4zqDcrkzR97y0iM9s7MnBl9cmK/faCj5vHmxF+iE6ae+Zib2XlvjFz+7UFxraoCi0t7jSluzZVLdmT7Kf3gMBA7wFSYiym7ZoNYNnRRlgsdqzGtF3FWGEcrQT7coONdW1VabhlXDyRKW6D2XeWczK0j7Fb/+DNtGpf6z1ei+0dEIeag3H9fEmfSpG+MwWrZAMrC+MTnJjD0NOkDPxJb4usNgSifzLNtpzFAhi0PyGtRD3y/2RZJX821IKqDlyxkbkXCpgzIAA/nOrnExOKZliEdTjRHMRP1Vp8O6rTgWNfFM+ZIxl52WAKEAYOv+YpOB2MlQEZ5rZpx5R7YH3ZCcx0gXnw7/8qNwdZyneVW9NtC/HNGOU9N+VBmxTtckqsgTbKSHu3vXJxW5jw8527CmxqwQXkGnO0NjsUX015vvGMGX+V01F4SRrnq89G15cwPDw6huRANFpMOW/+CVvxZj8N/oRKtSnuXQguver55L9DjLVOIISM0qCUTwaDVQX9BOMITSrUYaKWyhTmjn1VCfNrbIKe+uPK9vtlErJm1o9IkWQYMT9TNb0mzOEP1L/efLGrYS8Vd/3Mo5mFUjMmfKUHH/7niVM92ocyZHmNVjc3891BikVSoFtaG2PO33jED1sCurkfPZRizM=
+          skip_cleanup: true
+          tag: next
+          on:
+            tags: true
+            condition: $TRAVIS_BRANCH =~ ^(release|hotfix)/
+            repo: Eddie-CooRo/express-hooks
+ 
+  

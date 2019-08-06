@@ -16,6 +16,7 @@ import {
 	useResponseHeader,
 	useIsAcceptable,
 	useIsCharsetAcceptable,
+	useIsEncodingAcceptable,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -202,6 +203,20 @@ describe('Hook runs correctly when integrates with express', () => {
 			request(app)
 				.get('/')
 				.set('Accept-Charset', charSet),
+		);
+	});
+
+	it('useIsEncodingAcceptable', () => {
+		const encoding = 'a';
+		app.get('/', (_, res) => {
+			expect(useIsEncodingAcceptable(encoding)).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept-Encoding', encoding),
 		);
 	});
 });

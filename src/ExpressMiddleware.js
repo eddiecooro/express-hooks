@@ -1,6 +1,6 @@
 import { setDispatcher } from './CurrentDispatcher';
 
-const expressMiddleware = (req, res, next) => {
+const expressMiddleware = () => (req, res, next) => {
 	setDispatcher({
 		_req: req,
 		_res: res,

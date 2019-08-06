@@ -1,4 +1,4 @@
-import expressMiddleware from '../index';
+import expressMiddleware from '../ExpressMiddleware';
 import request from 'supertest';
 import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery, useBaseUrl } from '../Hooks';
 
@@ -8,7 +8,7 @@ describe('Hook runs correctly when integrates with express', () => {
 	beforeEach(() => {
 		express = require('express');
 		app = express();
-		app.use(expressMiddleware);
+		app.use(expressMiddleware());
 	});
 
 	it('useRes', () => {

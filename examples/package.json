@@ -1,0 +1,14 @@
+{
+	"name": "@express-hooks/example",
+	"version": "1.0.0",
+	"description": "An example for the express-hooks package",
+	"scripts": {
+		"preinstall": "cd ../ && yarn",
+		"prestart": "cd ../ && yarn prepare",
+		"start": "node index.js"
+	},
+	"main": "index.js",
+	"author": "Eddie-CooRo <eddiecooro@gmail.com>",
+	"license": "MIT",
+	"private": true
+}

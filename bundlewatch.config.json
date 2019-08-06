@@ -1,10 +1,12 @@
 {
 	"files": [
 		{
-			"path": "dist/index.js"
+			"path": "dist/index.js",
+			"maxSize": "100KB"
 		},
 		{
-			"path": "dev/index.js"
+			"path": "dev/index.js",
+			"maxSize": "300KB"
 		}
 	],
 	"ci": {

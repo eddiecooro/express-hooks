@@ -86,6 +86,6 @@ describe('Hook runs correctly when integrates with express', () => {
 		});
 		app.use('/eddie', router);
 
-		return request(app).get('/eddie/cooro');
+		return expect(app).toNotExpressError(() => request(app).get('/eddie/cooro'));
 	});
 });

@@ -1,49 +1,51 @@
 {
-  "name": "express-hooks",
-  "version": "0.0.1",
-  "description": "Custom hooks for use in express apps",
-  "main": "dist/index.js",
-  "scripts": {
-    "start": "webpack --mode development --watch",
-    "test": "jest",
-    "build": "webpack --mode production"
-  },
-  "author": "Eddie CooRo <eddiecooro@gmail.com>",
-  "contributors": [
-    "Eddie CooRo <eddiecooro@gmail.com>",
-    "Ali Fk <alichfc@gmail.com>"
-  ],
-  "license": "MIT",
-  "private": false,
-  "peerDependencies": {
-    "express": "^4.0.0"
-  },
-  "engines": {
-    "node": ">=8.0.0"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "@types/jest": "^24.0.16",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^24.1.0",
-    "babel-loader": "^8.0.0",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-loader": "^2.1.1",
-    "express": "^4.0.0",
-    "jest": "^24.1.0",
-    "nodemon": "^1.19.1",
-    "source-map-support": "^0.5.13",
-    "supertest": "^4.0.2",
-    "uglifyjs-webpack-plugin": "^1.3.0",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6",
-    "webpack-dev-middleware": "^3.4.0",
-    "webpack-hot-middleware": "^2.24.3",
-    "webpack-node-externals": "^1.7.2",
-    "webpack-shell-plugin": "^0.5.0"
-  }
+	"name": "express-hooks",
+	"version": "0.0.1",
+	"description": "Custom hooks for use in express apps",
+	"main": "dist/index.js",
+	"scripts": {
+		"start": "webpack --mode development --nodemon --watch",
+		"prepare": "npm run build && npm run devbuild",
+		"test": "jest",
+		"devbuild": "webpack --mode development",
+		"build": "webpack --mode production"
+	},
+	"author": "Eddie CooRo <eddiecooro@gmail.com>",
+	"contributors": [
+		"Eddie CooRo <eddiecooro@gmail.com>",
+		"Ali Fk <alichfc@gmail.com>"
+	],
+	"license": "MIT",
+	"private": false,
+	"peerDependencies": {
+		"express": "^4.0.0"
+	},
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.0.0",
+		"@babel/preset-env": "^7.0.0",
+		"@types/jest": "^24.0.16",
+		"babel-core": "^7.0.0-bridge.0",
+		"babel-eslint": "^9.0.0",
+		"babel-jest": "^24.1.0",
+		"babel-loader": "^8.0.0",
+		"eslint": "^4.19.1",
+		"eslint-config-airbnb": "^17.1.1",
+		"eslint-config-prettier": "^6.0.0",
+		"eslint-loader": "^2.1.1",
+		"express": "^4.0.0",
+		"jest": "^24.1.0",
+		"nodemon": "^1.19.1",
+		"source-map-support": "^0.5.13",
+		"supertest": "^4.0.2",
+		"uglifyjs-webpack-plugin": "^1.3.0",
+		"webpack": "^4.39.1",
+		"webpack-cli": "^3.3.6",
+		"webpack-dev-middleware": "^3.4.0",
+		"webpack-hot-middleware": "^2.24.3",
+		"webpack-node-externals": "^1.7.2",
+		"webpack-shell-plugin": "^0.5.0"
+	}
 }

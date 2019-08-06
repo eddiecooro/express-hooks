@@ -1,5 +1,5 @@
 {
-	"name": "express-hooks-example",
+	"name": "@express-hooks/example",
 	"version": "1.0.0",
 	"description": "An example for the express-hooks package",
 	"scripts": {
@@ -10,5 +10,5 @@
 	"main": "index.js",
 	"author": "Eddie-CooRo <eddiecooro@gmail.com>",
 	"license": "MIT",
-	"private": false
+	"private": true
 }

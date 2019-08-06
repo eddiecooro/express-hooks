@@ -1,3 +1,3 @@
 # express-hooks
 
-Checkout this example: (/examples)[./examples/index.js]
+Checkout the example inside of the examples folder: [/examples/index.js](examples/index.js)

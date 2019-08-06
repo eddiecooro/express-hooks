@@ -14,6 +14,7 @@ import {
 	useAttachment,
 	useHeader,
 	useResponseHeader,
+	useIsAcceptable,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -173,5 +174,19 @@ describe('Hook runs correctly when integrates with express', () => {
 		});
 
 		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIsAcceptable', () => {
+		const contentType = 'application/json';
+		app.get('/', (_, res) => {
+			expect(useIsAcceptable('json')).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept', contentType),
+		);
 	});
 });

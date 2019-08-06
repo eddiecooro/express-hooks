@@ -1,4 +1,14 @@
-import { useParam, useRes, useReq, usePath, useMethod, useQuery, useHostName, useBaseUrl } from '../Hooks';
+import {
+	useParam,
+	useRes,
+	useReq,
+	usePath,
+	useMethod,
+	useQuery,
+	useHostName,
+	useBaseUrl,
+	useSetCookie,
+} from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -98,6 +108,25 @@ describe('hooks', () => {
 				},
 			});
 			expect(useHostName()).toMatch(hostname);
+		});
+	});
+
+	describe('useSetCookit', () => {
+		it('Calls the res.cookie with the provided parameters', () => {
+			const returnValue = 'COOKIE SETTED';
+			const cookieName = 'name';
+			const cookieValue = 'eddie';
+			const options = 'options';
+			const cookieFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_res: {
+					cookie: cookieFN,
+				},
+			});
+
+			expect(useSetCookie(cookieName, cookieValue, options)).toBe(returnValue);
+			expect(cookieFN).toHaveBeenCalledTimes(1);
+			expect(cookieFN).toHaveBeenCalledWith(cookieName, cookieValue, options);
 		});
 	});
 });

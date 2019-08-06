@@ -40,3 +40,8 @@ export function useHostName() {
 	const req = useReq();
 	return req.hostname;
 }
+
+export function useSetCookie(cookieName, cookieValue, options) {
+	const res = useRes();
+	return res.cookie(cookieName, cookieValue, options);
+}

@@ -1,0 +1,10 @@
+{
+	"files": [
+		{
+			"path": "dist/index.js"
+		},
+		{
+			"path": "dev/index.js"
+		}
+	]
+}

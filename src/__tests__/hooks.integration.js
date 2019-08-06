@@ -1,4 +1,4 @@
-import expressMiddleware from '../index';
+import expressMiddleware from '../ExpressMiddleware';
 import request from 'supertest';
 import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery, useBaseUrl } from '../Hooks';
 

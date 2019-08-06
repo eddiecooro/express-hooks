@@ -75,3 +75,8 @@ export function useIsCharsetAcceptable(charSet) {
 	const req = useReq();
 	return req.acceptsCharsets(charSet);
 }
+
+export function useIsEncodingAcceptable(encoding) {
+	const req = useReq();
+	return req.acceptsEncodings(encoding);
+}

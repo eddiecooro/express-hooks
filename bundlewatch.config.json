@@ -1,0 +1,16 @@
+{
+	"files": [
+		{
+			"path": "dist/index.js",
+			"maxSize": "100KB"
+		},
+		{
+			"path": "dev/index.js",
+			"maxSize": "300KB"
+		}
+	],
+	"ci": {
+		"trackBranches": ["master", "develop"]
+	},
+	"defaultCompression": "none"
+}

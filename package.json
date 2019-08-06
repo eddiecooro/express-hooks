@@ -1,10 +1,11 @@
 {
 	"name": "@express-hooks/core",
-	"version": "0.1.1",
+	"version": "0.1.2-rc3",
 	"description": "Custom hooks for use in express apps",
 	"main": "dist/index.js",
 	"scripts": {
 		"start": "webpack --mode development --nodemon --watch",
+		"bundlewatch": "bundlewatch --config bundlewatch.config.json",
 		"prepare": "npm run build && npm run devbuild",
 		"test": "jest",
 		"devbuild": "webpack --mode development",
@@ -35,6 +36,7 @@
 		"babel-eslint": "^9.0.0",
 		"babel-jest": "^24.1.0",
 		"babel-loader": "^8.0.0",
+		"bundlewatch": "^0.2.5",
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb": "^17.1.1",
 		"eslint-config-prettier": "^6.0.0",

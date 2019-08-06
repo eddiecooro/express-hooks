@@ -17,6 +17,7 @@ import {
 	useIsAcceptable,
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
+	useIsLanguageAcceptable,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -217,6 +218,20 @@ describe('Hook runs correctly when integrates with express', () => {
 			request(app)
 				.get('/')
 				.set('Accept-Encoding', encoding),
+		);
+	});
+
+	it('useIsLanguageAcceptable', () => {
+		const language = 'fa';
+		app.get('/', (_, res) => {
+			expect(useIsLanguageAcceptable(language)).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept-Language', language),
 		);
 	});
 });

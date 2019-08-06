@@ -23,7 +23,7 @@ jobs:
           tag: next
           on:
             tags: true
-            condition: $TRAVIS_BRANCH =~ ^release/
+            condition: $TRAVIS_BRANCH =~ ^(release|hotfix)/
             repo: Eddie-CooRo/express-hooks
  
   

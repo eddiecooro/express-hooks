@@ -55,3 +55,8 @@ export function useAttachment(fileName) {
 	const res = useRes();
 	return res.attachment(fileName);
 }
+
+export function useHeader(headerName, defaultValue) {
+	const req = useReq();
+	return req.get(headerName) || defaultValue;
+}

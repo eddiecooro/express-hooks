@@ -50,3 +50,8 @@ export function useAppend(field, value) {
 	const res = useRes();
 	return res.append(field, value);
 }
+
+export function useAttachment(fileName) {
+	const res = useRes();
+	return res.attachment(fileName);
+}

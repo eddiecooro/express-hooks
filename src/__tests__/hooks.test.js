@@ -9,6 +9,7 @@ import {
 	useBaseUrl,
 	useSetCookie,
 	useAppend,
+	useAttachment,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -147,6 +148,24 @@ describe('hooks', () => {
 			expect(useAppend(name, value)).toBe(returnValue);
 			expect(appendFN).toHaveBeenCalledTimes(1);
 			expect(appendFN).toHaveBeenCalledWith(name, value);
+		});
+	});
+
+	describe('useAttachment', () => {
+		it('Calls res.attachment with the provided parameters', () => {
+			const returnValue = 'ATTACHED';
+			const fileName = 'file name';
+
+			const attachFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_res: {
+					attachment: attachFN,
+				},
+			});
+
+			expect(useAttachment(fileName)).toBe(returnValue);
+			expect(attachFN).toHaveBeenCalledTimes(1);
+			expect(attachFN).toHaveBeenCalledWith(fileName);
 		});
 	});
 });

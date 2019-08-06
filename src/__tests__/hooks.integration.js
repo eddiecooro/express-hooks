@@ -11,7 +11,9 @@ import {
 	useBaseUrl,
 	useSetCookie,
 	useAppend,
+	useAttachment,
 } from '../Hooks';
+import { file } from '@babel/types';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let express;
@@ -127,6 +129,21 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.expect(200)
 				.expect(headerName, headerValue),
+		);
+	});
+
+	it('useAttachment', () => {
+		const fileName = 'filename';
+		app.get('/', (_, res) => {
+			useAttachment(fileName);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.expect(200)
+				.expect('Content-Disposition', `attachment; filename="${fileName}"`),
 		);
 	});
 });

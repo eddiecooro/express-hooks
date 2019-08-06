@@ -4,7 +4,7 @@ expect.extend({
 		// eslint-disable-next-line no-unused-vars
 		app.use(function(err, req, res, next) {
 			const isMatcherError =
-				err.matcherResult && err.matcherResult.actual !== undefined && err.matcherResult.expected !== undefined;
+				err.matcherResult && err.matcherResult.message !== undefined && err.matcherResult.pass !== undefined;
 			if (isMatcherError) {
 				error = err.matcherResult;
 			}

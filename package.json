@@ -10,6 +10,9 @@
 		"devbuild": "webpack --mode development",
 		"build": "webpack --mode production"
 	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"author": "Eddie CooRo <eddiecooro@gmail.com>",
 	"contributors": [
 		"Eddie CooRo <eddiecooro@gmail.com>",

@@ -1,6 +1,6 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam, useHostName } from '../Hooks';
+import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let app;
@@ -38,6 +38,33 @@ describe('Hook runs correctly when integrates with express', () => {
 		return request(app).get(`/${name}`);
 	});
 
+	it.each([['/eddie', '/eddie'], ['/', '/'], ['/:name', '/eddie'], ['/:name', '/']])(
+		'Testing usePath for: %s',
+		(path, reqPath) => {
+			app.get(path, (_, res) => {
+				expect(usePath()).toBe(reqPath);
+				res.end();
+			});
+			return request(app).get(reqPath);
+		},
+	);
+
+	it.each([['GET'], ['POST'], ['PUT']])('Testing useMethod for: %s method', method => {
+		app.get('/', (_, res) => {
+			expect(useMethod()).toBe(method);
+			res.end();
+		});
+		return request(app)[method.toLowerCase()]('/');
+	});
+
+	it('useQuery', () => {
+		app.get('/', (_, res) => {
+			expect(useQuery('name')).toBe('eddie');
+			res.end();
+		});
+		return request(app).get('/?name=eddie');
+  });
+  
 	it('useHostName', () => {
 		app.get('/', (_, res) => {
 			const hostName = useHostName();

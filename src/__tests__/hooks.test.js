@@ -11,6 +11,7 @@ import {
 	useAppend,
 	useAttachment,
 	useHeader,
+	useResponseHeader,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -183,6 +184,26 @@ describe('hooks', () => {
 			const defaultValue = 'default';
 			setDispatcher({ _req: { get: () => {} } });
 			expect(useHeader('HEADER', defaultValue)).toBe(defaultValue);
+		});
+	});
+
+	describe('useResponseHeader', () => {
+		it('Calls res.get with the provided header name', () => {
+			const headerName = 'HEADER';
+			const headerValue = 'VALUE';
+
+			const getFN = jest.fn(() => headerValue);
+			setDispatcher({ _res: { get: getFN } });
+
+			expect(useResponseHeader(headerName)).toBe(headerValue);
+			expect(getFN).toHaveBeenCalledTimes(1);
+			expect(getFN).toHaveBeenCalledWith(headerName);
+		});
+
+		it("Returns default value if the header doesn't exist", () => {
+			const defaultValue = 'default';
+			setDispatcher({ _res: { get: () => {} } });
+			expect(useResponseHeader('HEADER', defaultValue)).toBe(defaultValue);
 		});
 	});
 });

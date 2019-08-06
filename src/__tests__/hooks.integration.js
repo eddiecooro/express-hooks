@@ -13,6 +13,7 @@ import {
 	useAppend,
 	useAttachment,
 	useHeader,
+	useResponseHeader,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -160,5 +161,17 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.set(headerName, headerValue),
 		);
+	});
+
+	it('useResponseHeader', () => {
+		const headerName = 'Content-Type';
+		const headerValue = 'application/json';
+		app.get('/', (_, res) => {
+			res.set(headerName, headerValue);
+			expect(useResponseHeader(headerName)).toContain(headerValue);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 });

@@ -60,3 +60,8 @@ export function useHeader(headerName, defaultValue) {
 	const req = useReq();
 	return req.get(headerName) || defaultValue;
 }
+
+export function useResponseHeader(headerName, defaultValue) {
+	const res = useRes();
+	return res.get(headerName) || defaultValue;
+}

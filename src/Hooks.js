@@ -80,3 +80,8 @@ export function useIsEncodingAcceptable(encoding) {
 	const req = useReq();
 	return req.acceptsEncodings(encoding);
 }
+
+export function useIsLanguageAcceptable(language) {
+	const req = useReq();
+	return req.acceptsLanguages(language);
+}

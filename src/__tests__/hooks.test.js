@@ -15,6 +15,7 @@ import {
 	useIsAcceptable,
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
+	useIsLanguageAcceptable,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -258,6 +259,23 @@ describe('hooks', () => {
 			expect(useIsEncodingAcceptable(encoding)).toBe(returnValue);
 			expect(acceptsFN).toHaveBeenCalledTimes(1);
 			expect(acceptsFN).toHaveBeenCalledWith(encoding);
+		});
+	});
+
+	describe('useIsLanguageAcceptable', () => {
+		it('Calls req.acceptsLanguage with the provided parameters', () => {
+			const returnValue = true;
+			const language = 'fa';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					acceptsLanguages: acceptsFN,
+				},
+			});
+
+			expect(useIsLanguageAcceptable(language)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(language);
 		});
 	});
 });

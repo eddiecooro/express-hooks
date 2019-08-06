@@ -19,3 +19,24 @@ export function useBaseUrl() {
 	const req = useReq();
 	return req.baseUrl;
 }
+
+export function usePath() {
+	const req = useReq();
+	return req.path;
+}
+
+export function useMethod() {
+	const req = useReq();
+	return req.method;
+}
+
+export function useQuery(queryName, defaultValue) {
+	if (!queryName) throw new Error('queryName parameter is required');
+	const req = useReq();
+	return req.query[queryName] || defaultValue;
+}
+
+export function useHostName() {
+	const req = useReq();
+	return req.hostname;
+}

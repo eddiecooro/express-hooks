@@ -1,11 +1,12 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam, useBaseUrl } from '../Hooks';
+import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery, useBaseUrl } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
+	let express;
 	let app;
 	beforeEach(() => {
-		const express = require('express');
+		express = require('express');
 		app = express();
 		app.use(expressMiddleware);
 	});
@@ -14,9 +15,9 @@ describe('Hook runs correctly when integrates with express', () => {
 		app.get('/', (_, res) => {
 			const middlewareRes = useRes();
 			expect(middlewareRes).toBe(res);
-			res.end();
+			res.send(middlewareRes === res);
 		});
-		return request(app).get('/');
+		return expect(app).toNotExpressError(() => request(app));
 	});
 
 	it('useReq', () => {
@@ -25,17 +26,55 @@ describe('Hook runs correctly when integrates with express', () => {
 			expect(middlewareReq).toBe(req);
 			res.end();
 		});
-		return request(app).get('/');
+
+		expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 
 	it('useParam', () => {
 		const name = 'Eddie';
 		app.get('/:name', (_, res) => {
 			const nameParam = useParam('name');
-			expect(nameParam).toMatch(name);
+			expect(nameParam).toBe(name);
+			res.send(nameParam);
+		});
+		return expect(app).toNotExpressError(() => request(app).get(`/${name}`));
+	});
+
+	it.each([['/eddie', '/eddie'], ['/', '/'], ['/:name', '/eddie'], ['/:name', '/']])(
+		'Testing usePath for: %s',
+		(path, reqPath) => {
+			app.get(path, (_, res) => {
+				expect(usePath()).toBe(reqPath);
+				res.end();
+			});
+			return expect(app).toNotExpressError(() => request(app).get(reqPath));
+		},
+	);
+
+	it.each([['GET'], ['POST'], ['PUT']])('Testing useMethod for: %s method', method => {
+		app.get('/', (_, res) => {
+			expect(useMethod()).toBe(method);
 			res.end();
 		});
-		return request(app).get(`/${name}`);
+		return expect(app).toNotExpressError(() => request(app)[method.toLowerCase()]('/'));
+	});
+
+	it('useQuery', () => {
+		app.get('/', (_, res) => {
+			expect(useQuery('name')).toBe('eddie');
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/?name=eddie'));
+	});
+
+	it('useHostName', () => {
+		app.get('/', (_, res) => {
+			const hostName = useHostName();
+			expect(hostName).toBe('127.0.0.1');
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 
 	it.skip('useBaseUrl', () => {

@@ -10,6 +10,7 @@ import {
 	useQuery,
 	useBaseUrl,
 	useSetCookie,
+	useAppend,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -110,6 +111,22 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.expect(200)
 				.expect('set-cookie', 'name=eddie; Path=/'),
+		);
+	});
+
+	it('useAppend', () => {
+		const headerName = 'X-NAME';
+		const headerValue = 'EDDIE';
+		app.get('/', (_, res) => {
+			useAppend(headerName, headerValue);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.expect(200)
+				.expect(headerName, headerValue),
 		);
 	});
 });

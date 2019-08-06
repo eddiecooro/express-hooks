@@ -8,6 +8,7 @@ import {
 	useHostName,
 	useBaseUrl,
 	useSetCookie,
+	useAppend,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -127,6 +128,25 @@ describe('hooks', () => {
 			expect(useSetCookie(cookieName, cookieValue, options)).toBe(returnValue);
 			expect(cookieFN).toHaveBeenCalledTimes(1);
 			expect(cookieFN).toHaveBeenCalledWith(cookieName, cookieValue, options);
+		});
+	});
+
+	describe('useAppend', () => {
+		it('Calls res.append with the provided parameters', () => {
+			const returnValue = 'HEADER APPENDED';
+			const name = 'name';
+			const value = 'eddie';
+
+			const appendFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_res: {
+					append: appendFN,
+				},
+			});
+
+			expect(useAppend(name, value)).toBe(returnValue);
+			expect(appendFN).toHaveBeenCalledTimes(1);
+			expect(appendFN).toHaveBeenCalledWith(name, value);
 		});
 	});
 });

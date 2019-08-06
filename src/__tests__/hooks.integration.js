@@ -8,7 +8,7 @@ describe('Hook runs correctly when integrates with express', () => {
 	beforeEach(() => {
 		express = require('express');
 		app = express();
-		app.use(expressMiddleware);
+		app.use(expressMiddleware());
 	});
 
 	it('useRes', () => {

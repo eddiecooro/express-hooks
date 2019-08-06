@@ -1,0 +1,14 @@
+{
+	"files": [
+		{
+			"path": "dist/index.js"
+		},
+		{
+			"path": "dev/index.js"
+		}
+	],
+	"ci": {
+		"trackBranches": ["master", "develop"]
+	},
+	"defaultCompression": "none"
+}

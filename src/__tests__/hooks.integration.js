@@ -77,12 +77,15 @@ describe('Hook runs correctly when integrates with express', () => {
 		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 
-	it.skip('useBaseUrl', () => {
-		app.get('/', (_, res) => {
+	it('useBaseUrl', () => {
+		const router = express.Router();
+		router.get('/cooro', (_, res) => {
 			const baseUrl = useBaseUrl();
-			expect(baseUrl).toMatch('');
-			res.end();
+			expect(baseUrl).toBe('/eddie');
+			res.send(baseUrl);
 		});
-		return request(app).get('/');
+		app.use('/eddie', router);
+
+		return request(app).get('/eddie/cooro');
 	});
 });

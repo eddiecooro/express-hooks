@@ -70,3 +70,8 @@ export function useIsAcceptable(contentType) {
 	const req = useReq();
 	return req.accepts(contentType);
 }
+
+export function useIsCharsetAcceptable(charSet) {
+	const req = useReq();
+	return req.acceptsCharsets(charSet);
+}

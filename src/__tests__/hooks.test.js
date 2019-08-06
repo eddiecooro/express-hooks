@@ -13,6 +13,7 @@ import {
 	useHeader,
 	useResponseHeader,
 	useIsAcceptable,
+	useIsCharsetAcceptable,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -222,6 +223,23 @@ describe('hooks', () => {
 			expect(useIsAcceptable(contentType)).toBe(returnValue);
 			expect(acceptsFN).toHaveBeenCalledTimes(1);
 			expect(acceptsFN).toHaveBeenCalledWith(contentType);
+		});
+	});
+
+	describe('useIsCharsetAcceptable', () => {
+		it('Calls req.acceptsCharset with the provided parameters', () => {
+			const returnValue = true;
+			const charset = 'json';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					acceptsCharsets: acceptsFN,
+				},
+			});
+
+			expect(useIsCharsetAcceptable(charset)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(charset);
 		});
 	});
 });

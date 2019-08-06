@@ -12,6 +12,7 @@ import {
 	useAttachment,
 	useHeader,
 	useResponseHeader,
+	useIsAcceptable,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -204,6 +205,23 @@ describe('hooks', () => {
 			const defaultValue = 'default';
 			setDispatcher({ _res: { get: () => {} } });
 			expect(useResponseHeader('HEADER', defaultValue)).toBe(defaultValue);
+		});
+	});
+
+	describe('useIsAcceptable', () => {
+		it('Calls req.accepts with the provided parameters', () => {
+			const returnValue = true;
+			const contentType = 'json';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					accepts: acceptsFN,
+				},
+			});
+
+			expect(useIsAcceptable(contentType)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(contentType);
 		});
 	});
 });

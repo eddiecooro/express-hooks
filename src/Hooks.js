@@ -65,3 +65,8 @@ export function useResponseHeader(headerName, defaultValue) {
 	const res = useRes();
 	return res.get(headerName) || defaultValue;
 }
+
+export function useIsAcceptable(contentType) {
+	const req = useReq();
+	return req.accepts(contentType);
+}

@@ -30,3 +30,8 @@ export function useQuery(queryName, defaultValue) {
 	const req = useReq();
 	return req.query[queryName] || defaultValue;
 }
+
+export function useHostName() {
+	const req = useReq();
+	return req.hostname;
+}

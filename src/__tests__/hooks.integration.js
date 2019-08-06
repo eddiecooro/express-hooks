@@ -1,6 +1,6 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam, usePath, useMethod, useQuery } from '../Hooks';
+import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let app;
@@ -63,5 +63,14 @@ describe('Hook runs correctly when integrates with express', () => {
 			res.end();
 		});
 		return request(app).get('/?name=eddie');
+  });
+  
+	it('useHostName', () => {
+		app.get('/', (_, res) => {
+			const hostName = useHostName();
+			expect(hostName).toBe('127.0.0.1');
+			res.end();
+		});
+		return request(app).get('/');
 	});
 });

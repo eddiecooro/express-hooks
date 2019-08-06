@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq, usePath, useMethod, useQuery } from '../Hooks';
+import { useParam, useRes, useReq, usePath, useMethod, useQuery, useHostName } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -74,6 +74,18 @@ describe('hooks', () => {
 
 		it("Throws if the queryName param doesn't gets passed", () => {
 			expect(() => useQuery()).toThrowErrorMatchingSnapshot();
+    });
+  });
+  
+	describe('useHostName', () => {
+		it('Returns the hostName from the req object', () => {
+			const hostname = 'eddiehost';
+			setDispatcher({
+				_req: {
+					hostname,
+				},
+			});
+			expect(useHostName()).toMatch(hostname);
 		});
 	});
 });

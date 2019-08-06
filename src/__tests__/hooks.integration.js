@@ -3,9 +3,10 @@ import request from 'supertest';
 import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
+	let express;
 	let app;
 	beforeEach(() => {
-		const express = require('express');
+		express = require('express');
 		app = express();
 		app.use(expressMiddleware);
 	});
@@ -14,9 +15,9 @@ describe('Hook runs correctly when integrates with express', () => {
 		app.get('/', (_, res) => {
 			const middlewareRes = useRes();
 			expect(middlewareRes).toBe(res);
-			res.end();
+			res.send(middlewareRes === res);
 		});
-		return request(app).get('/');
+		return expect(app).toNotExpressError(() => request(app));
 	});
 
 	it('useReq', () => {
@@ -25,17 +26,18 @@ describe('Hook runs correctly when integrates with express', () => {
 			expect(middlewareReq).toBe(req);
 			res.end();
 		});
-		return request(app).get('/');
+
+		expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 
 	it('useParam', () => {
 		const name = 'Eddie';
 		app.get('/:name', (_, res) => {
 			const nameParam = useParam('name');
-			expect(nameParam).toMatch(name);
-			res.end();
+			expect(nameParam).toBe(name);
+			res.send(nameParam);
 		});
-		return request(app).get(`/${name}`);
+		return expect(app).toNotExpressError(() => request(app).get(`/${name}`));
 	});
 
 	it.each([['/eddie', '/eddie'], ['/', '/'], ['/:name', '/eddie'], ['/:name', '/']])(
@@ -45,7 +47,7 @@ describe('Hook runs correctly when integrates with express', () => {
 				expect(usePath()).toBe(reqPath);
 				res.end();
 			});
-			return request(app).get(reqPath);
+			return expect(app).toNotExpressError(() => request(app).get(reqPath));
 		},
 	);
 
@@ -54,7 +56,7 @@ describe('Hook runs correctly when integrates with express', () => {
 			expect(useMethod()).toBe(method);
 			res.end();
 		});
-		return request(app)[method.toLowerCase()]('/');
+		return expect(app).toNotExpressError(() => request(app)[method.toLowerCase()]('/'));
 	});
 
 	it('useQuery', () => {
@@ -62,15 +64,16 @@ describe('Hook runs correctly when integrates with express', () => {
 			expect(useQuery('name')).toBe('eddie');
 			res.end();
 		});
-		return request(app).get('/?name=eddie');
-  });
-  
+		return expect(app).toNotExpressError(() => request(app).get('/?name=eddie'));
+	});
+
 	it('useHostName', () => {
 		app.get('/', (_, res) => {
 			const hostName = useHostName();
 			expect(hostName).toBe('127.0.0.1');
 			res.end();
 		});
-		return request(app).get('/');
+
+		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 });

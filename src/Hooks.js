@@ -40,3 +40,48 @@ export function useHostName() {
 	const req = useReq();
 	return req.hostname;
 }
+
+export function useSetCookie(cookieName, cookieValue, options) {
+	const res = useRes();
+	return res.cookie(cookieName, cookieValue, options);
+}
+
+export function useAppend(field, value) {
+	const res = useRes();
+	return res.append(field, value);
+}
+
+export function useAttachment(fileName) {
+	const res = useRes();
+	return res.attachment(fileName);
+}
+
+export function useHeader(headerName, defaultValue) {
+	const req = useReq();
+	return req.get(headerName) || defaultValue;
+}
+
+export function useResponseHeader(headerName, defaultValue) {
+	const res = useRes();
+	return res.get(headerName) || defaultValue;
+}
+
+export function useIsAcceptable(contentType) {
+	const req = useReq();
+	return req.accepts(contentType);
+}
+
+export function useIsCharsetAcceptable(charSet) {
+	const req = useReq();
+	return req.acceptsCharsets(charSet);
+}
+
+export function useIsEncodingAcceptable(encoding) {
+	const req = useReq();
+	return req.acceptsEncodings(encoding);
+}
+
+export function useIsLanguageAcceptable(language) {
+	const req = useReq();
+	return req.acceptsLanguages(language);
+}

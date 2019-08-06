@@ -1,6 +1,24 @@
 import expressMiddleware from '../ExpressMiddleware';
 import request from 'supertest';
-import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery, useBaseUrl } from '../Hooks';
+import {
+	useRes,
+	useReq,
+	useParam,
+	useHostName,
+	usePath,
+	useMethod,
+	useQuery,
+	useBaseUrl,
+	useSetCookie,
+	useAppend,
+	useAttachment,
+	useHeader,
+	useResponseHeader,
+	useIsAcceptable,
+	useIsCharsetAcceptable,
+	useIsEncodingAcceptable,
+	useIsLanguageAcceptable,
+} from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let express;
@@ -86,6 +104,134 @@ describe('Hook runs correctly when integrates with express', () => {
 		});
 		app.use('/eddie', router);
 
-		return request(app).get('/eddie/cooro');
+		return expect(app).toNotExpressError(() => request(app).get('/eddie/cooro'));
+	});
+
+	it('useSetCookie', () => {
+		app.get('/', (_, res) => {
+			useSetCookie('name', 'eddie');
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.expect(200)
+				.expect('set-cookie', 'name=eddie; Path=/'),
+		);
+	});
+
+	it('useAppend', () => {
+		const headerName = 'X-NAME';
+		const headerValue = 'EDDIE';
+		app.get('/', (_, res) => {
+			useAppend(headerName, headerValue);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.expect(200)
+				.expect(headerName, headerValue),
+		);
+	});
+
+	it('useAttachment', () => {
+		const fileName = 'filename';
+		app.get('/', (_, res) => {
+			useAttachment(fileName);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.expect(200)
+				.expect('Content-Disposition', `attachment; filename="${fileName}"`),
+		);
+	});
+
+	it('useHeader', () => {
+		const headerName = 'Content-Type';
+		const headerValue = 'application/json';
+		app.get('/', (_, res) => {
+			expect(useHeader(headerName)).toBe(headerValue);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set(headerName, headerValue),
+		);
+	});
+
+	it('useResponseHeader', () => {
+		const headerName = 'Content-Type';
+		const headerValue = 'application/json';
+		app.get('/', (_, res) => {
+			res.set(headerName, headerValue);
+			expect(useResponseHeader(headerName)).toContain(headerValue);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIsAcceptable', () => {
+		const contentType = 'application/json';
+		app.get('/', (_, res) => {
+			expect(useIsAcceptable('json')).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept', contentType),
+		);
+	});
+
+	it('useIsCharsetAcceptable', () => {
+		const charSet = 'utf8';
+		app.get('/', (_, res) => {
+			expect(useIsCharsetAcceptable(charSet)).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept-Charset', charSet),
+		);
+	});
+
+	it('useIsEncodingAcceptable', () => {
+		const encoding = 'a';
+		app.get('/', (_, res) => {
+			expect(useIsEncodingAcceptable(encoding)).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept-Encoding', encoding),
+		);
+	});
+
+	it('useIsLanguageAcceptable', () => {
+		const language = 'fa';
+		app.get('/', (_, res) => {
+			expect(useIsLanguageAcceptable(language)).toBeTruthy();
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Accept-Language', language),
+		);
 	});
 });

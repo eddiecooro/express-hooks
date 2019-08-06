@@ -1,4 +1,22 @@
-import { useParam, useRes, useReq, usePath, useMethod, useQuery, useHostName, useBaseUrl } from '../Hooks';
+import {
+	useParam,
+	useRes,
+	useReq,
+	usePath,
+	useMethod,
+	useQuery,
+	useHostName,
+	useBaseUrl,
+	useSetCookie,
+	useAppend,
+	useAttachment,
+	useHeader,
+	useResponseHeader,
+	useIsAcceptable,
+	useIsCharsetAcceptable,
+	useIsEncodingAcceptable,
+	useIsLanguageAcceptable,
+} from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -98,6 +116,166 @@ describe('hooks', () => {
 				},
 			});
 			expect(useHostName()).toMatch(hostname);
+		});
+	});
+
+	describe('useSetCookit', () => {
+		it('Calls the res.cookie with the provided parameters', () => {
+			const returnValue = 'COOKIE SETTED';
+			const cookieName = 'name';
+			const cookieValue = 'eddie';
+			const options = 'options';
+			const cookieFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_res: {
+					cookie: cookieFN,
+				},
+			});
+
+			expect(useSetCookie(cookieName, cookieValue, options)).toBe(returnValue);
+			expect(cookieFN).toHaveBeenCalledTimes(1);
+			expect(cookieFN).toHaveBeenCalledWith(cookieName, cookieValue, options);
+		});
+	});
+
+	describe('useAppend', () => {
+		it('Calls res.append with the provided parameters', () => {
+			const returnValue = 'HEADER APPENDED';
+			const name = 'name';
+			const value = 'eddie';
+
+			const appendFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_res: {
+					append: appendFN,
+				},
+			});
+
+			expect(useAppend(name, value)).toBe(returnValue);
+			expect(appendFN).toHaveBeenCalledTimes(1);
+			expect(appendFN).toHaveBeenCalledWith(name, value);
+		});
+	});
+
+	describe('useAttachment', () => {
+		it('Calls res.attachment with the provided parameters', () => {
+			const returnValue = 'ATTACHED';
+			const fileName = 'file name';
+
+			const attachFN = jest.fn(() => returnValue);
+			setDispatcher({ _res: { attachment: attachFN } });
+
+			expect(useAttachment(fileName)).toBe(returnValue);
+			expect(attachFN).toHaveBeenCalledTimes(1);
+			expect(attachFN).toHaveBeenCalledWith(fileName);
+		});
+	});
+
+	describe('useHeader', () => {
+		it('Calls req.get with the provided header name', () => {
+			const headerName = 'HEADER';
+			const headerValue = 'VALUE';
+
+			const getFN = jest.fn(() => headerValue);
+			setDispatcher({ _req: { get: getFN } });
+
+			expect(useHeader(headerName)).toBe(headerValue);
+			expect(getFN).toHaveBeenCalledTimes(1);
+			expect(getFN).toHaveBeenCalledWith(headerName);
+		});
+
+		it("Returns default value if the header doesn't exist", () => {
+			const defaultValue = 'default';
+			setDispatcher({ _req: { get: () => {} } });
+			expect(useHeader('HEADER', defaultValue)).toBe(defaultValue);
+		});
+	});
+
+	describe('useResponseHeader', () => {
+		it('Calls res.get with the provided header name', () => {
+			const headerName = 'HEADER';
+			const headerValue = 'VALUE';
+
+			const getFN = jest.fn(() => headerValue);
+			setDispatcher({ _res: { get: getFN } });
+
+			expect(useResponseHeader(headerName)).toBe(headerValue);
+			expect(getFN).toHaveBeenCalledTimes(1);
+			expect(getFN).toHaveBeenCalledWith(headerName);
+		});
+
+		it("Returns default value if the header doesn't exist", () => {
+			const defaultValue = 'default';
+			setDispatcher({ _res: { get: () => {} } });
+			expect(useResponseHeader('HEADER', defaultValue)).toBe(defaultValue);
+		});
+	});
+
+	describe('useIsAcceptable', () => {
+		it('Calls req.accepts with the provided parameters', () => {
+			const returnValue = true;
+			const contentType = 'json';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					accepts: acceptsFN,
+				},
+			});
+
+			expect(useIsAcceptable(contentType)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(contentType);
+		});
+	});
+
+	describe('useIsCharsetAcceptable', () => {
+		it('Calls req.acceptsCharset with the provided parameters', () => {
+			const returnValue = true;
+			const charset = 'json';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					acceptsCharsets: acceptsFN,
+				},
+			});
+
+			expect(useIsCharsetAcceptable(charset)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(charset);
+		});
+	});
+
+	describe('useIsEncodingAcceptable', () => {
+		it('Calls req.acceptsEncoding with the provided parameters', () => {
+			const returnValue = true;
+			const encoding = 'a';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					acceptsEncodings: acceptsFN,
+				},
+			});
+
+			expect(useIsEncodingAcceptable(encoding)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(encoding);
+		});
+	});
+
+	describe('useIsLanguageAcceptable', () => {
+		it('Calls req.acceptsLanguage with the provided parameters', () => {
+			const returnValue = true;
+			const language = 'fa';
+			const acceptsFN = jest.fn(() => returnValue);
+			setDispatcher({
+				_req: {
+					acceptsLanguages: acceptsFN,
+				},
+			});
+
+			expect(useIsLanguageAcceptable(language)).toBe(returnValue);
+			expect(acceptsFN).toHaveBeenCalledTimes(1);
+			expect(acceptsFN).toHaveBeenCalledWith(language);
 		});
 	});
 });

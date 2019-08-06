@@ -1,3 +1,2 @@
-import expressMiddleware from './ExpressMiddleware';
-
-export default expressMiddleware;
+export { default as middleware } from './ExpressMiddleware';
+export * from './Hooks';

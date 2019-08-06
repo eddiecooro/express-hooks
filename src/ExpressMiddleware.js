@@ -1,13 +1,12 @@
-import CurrentDispatcher from './CurrentDispatcher';
-import { resolveDispatcher } from './utils';
+import { setDispatcher } from './CurrentDispatcher';
 
-const expressMiddleware = (req, res, next) => {
-  CurrentDispatcher.current = {
-    _req: req,
-    _res: res
-  };
-  next();
-  CurrentDispatcher.current = null;
+const expressMiddleware = () => (req, res, next) => {
+	setDispatcher({
+		_req: req,
+		_res: res,
+	});
+	next();
+	setDispatcher(null);
 };
 
 export default expressMiddleware;

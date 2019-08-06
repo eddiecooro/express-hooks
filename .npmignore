@@ -30,5 +30,5 @@ benchmarks/graphs
 .vscode
 
 # Custom
-dist
-dev
+src/__tests__
+examples

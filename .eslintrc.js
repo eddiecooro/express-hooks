@@ -1,4 +1,8 @@
 module.exports = {
-  extends: ['eslint:recommended'],
-  parser: 'babel-eslint'
+	extends: ['prettier', 'eslint:recommended'],
+	env: {
+		jest: true,
+		node: true,
+	},
+	parser: 'babel-eslint',
 };

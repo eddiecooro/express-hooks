@@ -10,6 +10,7 @@ import {
 	useSetCookie,
 	useAppend,
 	useAttachment,
+	useHeader,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -157,15 +158,31 @@ describe('hooks', () => {
 			const fileName = 'file name';
 
 			const attachFN = jest.fn(() => returnValue);
-			setDispatcher({
-				_res: {
-					attachment: attachFN,
-				},
-			});
+			setDispatcher({ _res: { attachment: attachFN } });
 
 			expect(useAttachment(fileName)).toBe(returnValue);
 			expect(attachFN).toHaveBeenCalledTimes(1);
 			expect(attachFN).toHaveBeenCalledWith(fileName);
+		});
+	});
+
+	describe('useHeader', () => {
+		it('Calls req.get with the provided header name', () => {
+			const headerName = 'HEADER';
+			const headerValue = 'VALUE';
+
+			const getFN = jest.fn(() => headerValue);
+			setDispatcher({ _req: { get: getFN } });
+
+			expect(useHeader(headerName)).toBe(headerValue);
+			expect(getFN).toHaveBeenCalledTimes(1);
+			expect(getFN).toHaveBeenCalledWith(headerName);
+		});
+
+		it("Returns default value if the header doesn't exist", () => {
+			const defaultValue = 'default';
+			setDispatcher({ _req: { get: () => {} } });
+			expect(useHeader('HEADER', defaultValue)).toBe(defaultValue);
 		});
 	});
 });

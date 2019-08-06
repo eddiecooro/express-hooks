@@ -12,8 +12,8 @@ import {
 	useSetCookie,
 	useAppend,
 	useAttachment,
+	useHeader,
 } from '../Hooks';
-import { file } from '@babel/types';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let express;
@@ -144,6 +144,21 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.expect(200)
 				.expect('Content-Disposition', `attachment; filename="${fileName}"`),
+		);
+	});
+
+	it('useHeader', () => {
+		const headerName = 'Content-Type';
+		const headerValue = 'application/json';
+		app.get('/', (_, res) => {
+			expect(useHeader(headerName)).toBe(headerValue);
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set(headerName, headerValue),
 		);
 	});
 });

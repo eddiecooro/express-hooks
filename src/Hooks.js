@@ -15,6 +15,11 @@ export function useReq() {
 	return dispatcher._req;
 }
 
+export function useBaseUrl() {
+	const req = useReq();
+	return req.baseUrl;
+}
+
 export function usePath() {
 	const req = useReq();
 	return req.path;

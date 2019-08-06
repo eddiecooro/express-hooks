@@ -1,6 +1,6 @@
 import expressMiddleware from '../index';
 import request from 'supertest';
-import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery } from '../Hooks';
+import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery, useBaseUrl } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let express;
@@ -75,5 +75,17 @@ describe('Hook runs correctly when integrates with express', () => {
 		});
 
 		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useBaseUrl', () => {
+		const router = express.Router();
+		router.get('/cooro', (_, res) => {
+			const baseUrl = useBaseUrl();
+			expect(baseUrl).toBe('/eddie');
+			res.send(baseUrl);
+		});
+		app.use('/eddie', router);
+
+		return request(app).get('/eddie/cooro');
 	});
 });

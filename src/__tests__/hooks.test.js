@@ -1,4 +1,4 @@
-import { useParam, useRes, useReq, usePath, useMethod, useQuery, useHostName } from '../Hooks';
+import { useParam, useRes, useReq, usePath, useMethod, useQuery, useHostName, useBaseUrl } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
 describe('hooks', () => {
@@ -44,6 +44,18 @@ describe('hooks', () => {
 		});
 	});
 
+	describe('useBaseUrl', () => {
+		it('Returns the correct base url', () => {
+			const baseUrl = '/Eddie';
+			setDispatcher({
+				_req: {
+					baseUrl,
+				},
+			});
+			expect(useBaseUrl()).toMatch(baseUrl);
+		});
+	});
+
 	describe('usePath', () => {
 		it('Returns the path from the request object', () => {
 			const path = '/ed';
@@ -74,9 +86,9 @@ describe('hooks', () => {
 
 		it("Throws if the queryName param doesn't gets passed", () => {
 			expect(() => useQuery()).toThrowErrorMatchingSnapshot();
-    });
-  });
-  
+		});
+	});
+
 	describe('useHostName', () => {
 		it('Returns the hostName from the req object', () => {
 			const hostname = 'eddiehost';

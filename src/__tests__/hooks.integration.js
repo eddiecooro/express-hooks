@@ -1,6 +1,16 @@
 import expressMiddleware from '../ExpressMiddleware';
 import request from 'supertest';
-import { useRes, useReq, useParam, useHostName, usePath, useMethod, useQuery, useBaseUrl } from '../Hooks';
+import {
+	useRes,
+	useReq,
+	useParam,
+	useHostName,
+	usePath,
+	useMethod,
+	useQuery,
+	useBaseUrl,
+	useSetCookie,
+} from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
 	let express;
@@ -87,5 +97,19 @@ describe('Hook runs correctly when integrates with express', () => {
 		app.use('/eddie', router);
 
 		return expect(app).toNotExpressError(() => request(app).get('/eddie/cooro'));
+	});
+
+	it('useSetCookie', () => {
+		app.get('/', (_, res) => {
+			useSetCookie('name', 'eddie');
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.expect(200)
+				.expect('set-cookie', 'name=eddie; Path=/'),
+		);
 	});
 });

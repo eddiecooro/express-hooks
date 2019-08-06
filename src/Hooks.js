@@ -45,3 +45,8 @@ export function useSetCookie(cookieName, cookieValue, options) {
 	const res = useRes();
 	return res.cookie(cookieName, cookieValue, options);
 }
+
+export function useAppend(field, value) {
+	const res = useRes();
+	return res.append(field, value);
+}

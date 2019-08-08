@@ -21,6 +21,7 @@ import {
 	useRange,
 	useProtocol,
 	useIsSecure,
+	useIP,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -268,5 +269,19 @@ describe('Hook runs correctly when integrates with express', () => {
 			res.end();
 		});
 		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIP', () => {
+		app.enable('trust proxy');
+		const ip = '4.2.2.4';
+		app.get('/', (_, res) => {
+			expect(useIP()).toBe(ip);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('X-Forwarded-For', ip),
+		);
 	});
 });

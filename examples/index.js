@@ -1,22 +1,24 @@
-import { useHeader } from '../src/Hooks';
 /* eslint-disable */
 const express = require('express');
 const app = express();
 const expressHooks = require('../index');
 
 const {
-	usePath,
-	useQuery,
 	useParam,
-	useHostName,
-	useBaseUrl,
+	usePath,
 	useMethod,
+	useQuery,
+	useHostname,
+	useBaseUrl,
+	useSetCookie,
 	useAppend,
 	useAttachment,
+	useHeader,
+	useResponseHeader,
 	useIsAcceptable,
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
-	useSetCookie,
+	useIsLanguageAcceptable,
 } = expressHooks;
 
 app.use(expressHooks.middleware());
@@ -37,7 +39,7 @@ app.get('/use-param/:name', (_, res) => {
 });
 
 app.get('/use-host-name', (_, res) => {
-	const hostName = useHostName();
+	const hostName = useHostname();
 	res.json({ hostName }).send();
 });
 

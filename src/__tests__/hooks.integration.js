@@ -22,6 +22,7 @@ import {
 	useProtocol,
 	useIsSecure,
 	useIP,
+	useIPs,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -282,6 +283,20 @@ describe('Hook runs correctly when integrates with express', () => {
 			request(app)
 				.get('/')
 				.set('X-Forwarded-For', ip),
+		);
+	});
+
+	it('useIPs', () => {
+		const ips = ['1.1.1.1', '2.2.2.2', '3.3.3.3'];
+		app.enable('trust proxy');
+		app.get('/', (_, res) => {
+			expect(useIPs()).toEqual(expect.arrayContaining(ips));
+			res.end();
+		});
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('X-Forwarded-For', ips.join(', ')),
 		);
 	});
 });

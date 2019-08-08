@@ -20,6 +20,7 @@ import {
 	useProtocol,
 	useIsSecure,
 	useIP,
+	useIPs,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -308,6 +309,14 @@ describe('hooks', () => {
 			const ip = '127.0.0.1';
 			setDispatcher({ _req: { ip } });
 			expect(useIP()).toBe(ip);
+		});
+	});
+
+	describe('useIPs', () => {
+		it('returns the ips field', () => {
+			const ips = '1.1.1.1, 2.2.2.2';
+			setDispatcher({ _req: { ips } });
+			expect(useIPs()).toBe(ips);
 		});
 	});
 });

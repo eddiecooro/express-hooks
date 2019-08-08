@@ -18,6 +18,7 @@ import {
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
 	useIsLanguageAcceptable,
+	useRange,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -232,6 +233,22 @@ describe('Hook runs correctly when integrates with express', () => {
 			request(app)
 				.get('/')
 				.set('Accept-Language', language),
+		);
+	});
+
+	it('useRange', () => {
+		app.get('/', (_, res) => {
+			const range = useRange(1000);
+			expect(range).toHaveProperty('0.start');
+			expect(range).toHaveProperty('0.end');
+			expect(range).toHaveProperty('type');
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Range', 'bytes=200-1000, 2000-6576,'),
 		);
 	});
 });

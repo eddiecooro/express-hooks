@@ -321,4 +321,11 @@ describe('Hook runs correctly when integrates with express', () => {
 				.set('X-Requested-With', 'XMLHttpRequest'),
 		);
 	});
+	it('headersSent', () => {
+		app.get('/', (_, res) => {
+			res.send();
+			expect(useHeadersSent()).toBe(true);
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
 });

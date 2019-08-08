@@ -47,9 +47,10 @@ export default {
 		implementation: useParam,
 		name: 'useParam',
 	},
-	// range: 'useRange',
-	// param: 'useParam',
-	// protocol: 'useProtocol',
+	range: {
+		type: 'function',
+		name: 'useRange',
+	},
 	// secure: 'useIsSecure',
 	// ip: 'useIP',
 	// ips: 'useIPs',

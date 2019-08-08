@@ -24,6 +24,7 @@ import {
 	useIP,
 	useIPs,
 	useSubdomains,
+	useIsXHR,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -307,5 +308,17 @@ describe('Hook runs correctly when integrates with express', () => {
 			res.end();
 		});
 		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIsXHR', () => {
+		app.get('/', (_, res) => {
+			expect(useIsXHR()).toBe(true);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('X-Requested-With', 'XMLHttpRequest'),
+		);
 	});
 });

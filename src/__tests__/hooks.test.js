@@ -22,6 +22,7 @@ import {
 	useIP,
 	useIPs,
 	useSubdomains,
+	useIsXHR,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -326,6 +327,14 @@ describe('hooks', () => {
 			const subdomains = ['a'];
 			setDispatcher({ _req: { subdomains } });
 			expect(useSubdomains()).toBe(subdomains);
+		});
+	});
+
+	describe('useIsXHR', () => {
+		it('returns the xhr field', () => {
+			const xhr = false;
+			setDispatcher({ _req: { xhr } });
+			expect(useIsXHR()).toBe(xhr);
 		});
 	});
 });

@@ -25,6 +25,7 @@ import {
 	useIPs,
 	useSubdomains,
 	useIsXHR,
+	useHeadersSent,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -321,6 +322,9 @@ describe('Hook runs correctly when integrates with express', () => {
 				.set('X-Requested-With', 'XMLHttpRequest'),
 		);
 	});
+
+	it('useSetLocals', () => {});
+
 	it('headersSent', () => {
 		app.get('/', (_, res) => {
 			res.send();

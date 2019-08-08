@@ -337,4 +337,11 @@ describe('hooks', () => {
 			expect(useIsXHR()).toBe(xhr);
 		});
 	});
+	describe('useHeadersSent', () => {
+		it('Returns the headersSent field', () => {
+			const headersSent = true;
+			setDispatcher({ _res: { headersSent } });
+			expect(useHeadersSent()).toBe(headersSent);
+		});
+	});
 });

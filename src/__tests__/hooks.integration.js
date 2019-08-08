@@ -4,7 +4,7 @@ import {
 	useRes,
 	useReq,
 	useParam,
-	useHostName,
+	useHostname,
 	usePath,
 	useMethod,
 	useQuery,
@@ -18,6 +18,15 @@ import {
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
 	useIsLanguageAcceptable,
+	useRange,
+	useProtocol,
+	useIsSecure,
+	useIP,
+	useIPs,
+	useSubdomains,
+	useIsXHR,
+	useHeadersSent,
+	useApp,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -85,9 +94,9 @@ describe('Hook runs correctly when integrates with express', () => {
 		return expect(app).toNotExpressError(() => request(app).get('/?name=eddie'));
 	});
 
-	it('useHostName', () => {
+	it('useHostname', () => {
 		app.get('/', (_, res) => {
-			const hostName = useHostName();
+			const hostName = useHostname();
 			expect(hostName).toBe('127.0.0.1');
 			res.end();
 		});
@@ -233,5 +242,103 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.set('Accept-Language', language),
 		);
+	});
+
+	it('useRange', () => {
+		app.get('/', (_, res) => {
+			const range = useRange(1000);
+			expect(range).toHaveProperty('0.start');
+			expect(range).toHaveProperty('0.end');
+			expect(range).toHaveProperty('type');
+			res.end();
+		});
+
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('Range', 'bytes=200-1000, 2000-6576,'),
+		);
+	});
+
+	it('useProtocol', () => {
+		app.get('/', (_, res) => {
+			expect(useProtocol()).toBe('http');
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIsSecure', () => {
+		app.get('/', (_, res) => {
+			expect(useIsSecure()).toBe(false);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIP', () => {
+		app.enable('trust proxy');
+		const ip = '4.2.2.4';
+		app.get('/', (_, res) => {
+			expect(useIP()).toBe(ip);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('X-Forwarded-For', ip),
+		);
+	});
+
+	it('useIPs', () => {
+		const ips = ['1.1.1.1', '2.2.2.2', '3.3.3.3'];
+		app.enable('trust proxy');
+		app.get('/', (_, res) => {
+			expect(useIPs()).toEqual(expect.arrayContaining(ips));
+			res.end();
+		});
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('X-Forwarded-For', ips.join(', ')),
+		);
+	});
+
+	it('useSubdomains', () => {
+		app.get('/', (_, res) => {
+			expect(useSubdomains()).toStrictEqual([]);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIsXHR', () => {
+		app.get('/', (_, res) => {
+			expect(useIsXHR()).toBe(true);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() =>
+			request(app)
+				.get('/')
+				.set('X-Requested-With', 'XMLHttpRequest'),
+		);
+	});
+
+	it('useSetLocals', () => {});
+
+	it('headersSent', () => {
+		app.get('/', (_, res) => {
+			res.send();
+			expect(useHeadersSent()).toBe(true);
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useApp', () => {
+		app.get('/', (_, res) => {
+			expect(useApp()).toBe(app);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 });

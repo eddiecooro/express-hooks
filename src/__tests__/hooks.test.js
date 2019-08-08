@@ -5,7 +5,7 @@ import {
 	usePath,
 	useMethod,
 	useQuery,
-	useHostName,
+	useHostname,
 	useBaseUrl,
 	useSetCookie,
 	useAppend,
@@ -16,6 +16,16 @@ import {
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
 	useIsLanguageAcceptable,
+	useRange,
+	useProtocol,
+	useIsSecure,
+	useIP,
+	useIPs,
+	useSubdomains,
+	useIsXHR,
+	useSetLocals,
+	useHeadersSent,
+	useApp,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -101,13 +111,9 @@ describe('hooks', () => {
 		it("Returns default value if the query doesn't exist", () => {
 			expect(useQuery('lastName', 'cooro')).toBe('cooro');
 		});
-
-		it("Throws if the queryName param doesn't gets passed", () => {
-			expect(() => useQuery()).toThrowErrorMatchingSnapshot();
-		});
 	});
 
-	describe('useHostName', () => {
+	describe('useHostname', () => {
 		it('Returns the hostName from the req object', () => {
 			const hostname = 'eddiehost';
 			setDispatcher({
@@ -115,7 +121,7 @@ describe('hooks', () => {
 					hostname,
 				},
 			});
-			expect(useHostName()).toMatch(hostname);
+			expect(useHostname()).toBe(hostname);
 		});
 	});
 
@@ -235,7 +241,7 @@ describe('hooks', () => {
 			const acceptsFN = jest.fn(() => returnValue);
 			setDispatcher({
 				_req: {
-					acceptsCharsets: acceptsFN,
+					acceptsCharset: acceptsFN,
 				},
 			});
 
@@ -252,7 +258,7 @@ describe('hooks', () => {
 			const acceptsFN = jest.fn(() => returnValue);
 			setDispatcher({
 				_req: {
-					acceptsEncodings: acceptsFN,
+					acceptsEncoding: acceptsFN,
 				},
 			});
 
@@ -267,15 +273,111 @@ describe('hooks', () => {
 			const returnValue = true;
 			const language = 'fa';
 			const acceptsFN = jest.fn(() => returnValue);
-			setDispatcher({
-				_req: {
-					acceptsLanguages: acceptsFN,
-				},
-			});
+			setDispatcher({ _req: { acceptsLanguage: acceptsFN } });
 
 			expect(useIsLanguageAcceptable(language)).toBe(returnValue);
 			expect(acceptsFN).toHaveBeenCalledTimes(1);
 			expect(acceptsFN).toHaveBeenCalledWith(language);
+		});
+	});
+
+	describe('useRange', () => {
+		it('Calls req.range with the provided parameters', () => {
+			const returnValue = 'RETURN';
+			const size = 1000;
+			const rangeFN = jest.fn(() => returnValue);
+			setDispatcher({ _req: { range: rangeFN } });
+			expect(useRange(size)).toBe(returnValue);
+			expect(rangeFN).toHaveBeenCalledTimes(1);
+			expect(rangeFN).toHaveBeenCalledWith(size);
+		});
+	});
+
+	describe('useProtocol', () => {
+		it('Returns the protocol field', () => {
+			const protocol = 'https';
+			setDispatcher({ _req: { protocol } });
+			expect(useProtocol()).toBe(protocol);
+		});
+	});
+
+	describe('useIsSecure', () => {
+		it('Returns the secure field', () => {
+			const secure = true;
+			setDispatcher({ _req: { secure } });
+			expect(useIsSecure()).toBe(secure);
+		});
+	});
+
+	describe('useIP', () => {
+		it('Returns the ip field', () => {
+			const ip = '127.0.0.1';
+			setDispatcher({ _req: { ip } });
+			expect(useIP()).toBe(ip);
+		});
+	});
+
+	describe('useIPs', () => {
+		it('returns the ips field', () => {
+			const ips = '1.1.1.1, 2.2.2.2';
+			setDispatcher({ _req: { ips } });
+			expect(useIPs()).toBe(ips);
+		});
+	});
+
+	describe('useSubdomains', () => {
+		it('returns the subdomains field', () => {
+			const subdomains = ['a'];
+			setDispatcher({ _req: { subdomains } });
+			expect(useSubdomains()).toBe(subdomains);
+		});
+	});
+
+	describe('useIsXHR', () => {
+		it('returns the xhr field', () => {
+			const xhr = false;
+			setDispatcher({ _req: { xhr } });
+			expect(useIsXHR()).toBe(xhr);
+		});
+	});
+
+	describe('useSetLocals', () => {
+		it('Merges locals when merge option is not passed', () => {
+			const locals = { name: 'Eddie' };
+			const newLocals = { surname: 'CooRo' };
+			const res = { locals };
+			setDispatcher({ _res: res });
+
+			useSetLocals(newLocals);
+
+			expect(res.locals).toStrictEqual({ ...locals, ...newLocals });
+		});
+
+		it("Doesn't merge when merge option is false", () => {
+			const locals = { name: 'Eddie' };
+			const newLocals = { surname: 'CooRo' };
+			const res = { locals };
+			setDispatcher({ _res: res });
+
+			useSetLocals(newLocals, false);
+
+			expect(res.locals).toStrictEqual(newLocals);
+		});
+	});
+
+	describe('useHeadersSent', () => {
+		it('Returns the headersSent field', () => {
+			const headersSent = true;
+			setDispatcher({ _res: { headersSent } });
+			expect(useHeadersSent()).toBe(headersSent);
+		});
+	});
+
+	describe('useApp', () => {
+		it('Returns the app field from the res', () => {
+			const app = { name: 'APP' };
+			setDispatcher({ _res: { app } });
+			expect(useApp()).toBe(app);
 		});
 	});
 });

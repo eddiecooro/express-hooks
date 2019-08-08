@@ -1,3 +1,5 @@
+import { useResponseHeader } from './ResHooksImplementation';
+
 module.exports = {
 	cookie: {
 		type: 'function',
@@ -12,7 +14,7 @@ module.exports = {
 		name: 'useAttachment',
 	},
 	get: {
-		type: 'function',
+		implementation: useResponseHeader,
 		name: 'useResponseHeader',
 	},
 };

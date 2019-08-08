@@ -1,3 +1,5 @@
+import { useParam, useQuery, useHeader } from './ReqHooksImplementation';
+
 export default {
 	baseUrl: 'useBaseUrl',
 	path: 'usePath',
@@ -6,7 +8,7 @@ export default {
 	fresh: 'useIsFresh',
 	stale: 'useIsStale',
 	header: {
-		type: 'function',
+		implementation: useHeader,
 		name: 'useHeader',
 	},
 	accepts: {
@@ -38,11 +40,11 @@ export default {
 		name: 'useIsLanguageAcceptable',
 	},
 	query: {
-		type: 'object',
+		implementation: useQuery,
 		name: 'useQuery',
 	},
 	params: {
-		type: 'object',
+		implementation: useParam,
 		name: 'useParam',
 	},
 	// range: 'useRange',

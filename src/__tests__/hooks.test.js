@@ -18,6 +18,7 @@ import {
 	useIsLanguageAcceptable,
 	useRange,
 	useProtocol,
+	useIsSecure,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -290,6 +291,14 @@ describe('hooks', () => {
 			const protocol = 'https';
 			setDispatcher({ _req: { protocol } });
 			expect(useProtocol()).toBe(protocol);
+		});
+	});
+
+	describe('useIsSecure', () => {
+		it('Returns the secure field', () => {
+			const secure = true;
+			setDispatcher({ _req: { secure } });
+			expect(useIsSecure()).toBe(secure);
 		});
 	});
 });

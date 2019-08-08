@@ -8,6 +8,7 @@ export default {
 	fresh: 'useIsFresh',
 	stale: 'useIsStale',
 	protocol: 'useProtocol',
+	secure: 'useIsSecure',
 	header: {
 		implementation: useHeader,
 		name: 'useHeader',
@@ -52,7 +53,6 @@ export default {
 		type: 'function',
 		name: 'useRange',
 	},
-	// secure: 'useIsSecure',
 	// ip: 'useIP',
 	// ips: 'useIPs',
 	// subdomains: 'useSubdomains',

@@ -21,6 +21,7 @@ import {
 	useIsSecure,
 	useIP,
 	useIPs,
+	useSubdomains,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -317,6 +318,14 @@ describe('hooks', () => {
 			const ips = '1.1.1.1, 2.2.2.2';
 			setDispatcher({ _req: { ips } });
 			expect(useIPs()).toBe(ips);
+		});
+	});
+
+	describe('useSubdomains', () => {
+		it('returns the subdomains field', () => {
+			const subdomains = ['a'];
+			setDispatcher({ _req: { subdomains } });
+			expect(useSubdomains()).toBe(subdomains);
 		});
 	});
 });

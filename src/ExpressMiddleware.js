@@ -1,4 +1,5 @@
 import { setDispatcher } from './CurrentDispatcher';
+import onFinished from 'on-finished';
 
 const expressMiddleware = () => (req, res, next) => {
 	setDispatcher({
@@ -6,7 +7,9 @@ const expressMiddleware = () => (req, res, next) => {
 		_res: res,
 	});
 	next();
-	setDispatcher(null);
+	onFinished(res, () => {
+		setDispatcher(null);
+	});
 };
 
 export default expressMiddleware;

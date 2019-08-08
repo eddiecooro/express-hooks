@@ -23,6 +23,7 @@ import {
 	useIsSecure,
 	useIP,
 	useIPs,
+	useSubdomains,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -298,5 +299,13 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.set('X-Forwarded-For', ips.join(', ')),
 		);
+	});
+
+	it('useSubdomains', () => {
+		app.get('/', (_, res) => {
+			expect(useSubdomains()).toStrictEqual([]);
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 });

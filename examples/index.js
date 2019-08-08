@@ -1,22 +1,33 @@
-import { useHeader } from '../src/Hooks';
 /* eslint-disable */
 const express = require('express');
 const app = express();
 const expressHooks = require('../index');
 
 const {
-	usePath,
-	useQuery,
 	useParam,
-	useHostName,
-	useBaseUrl,
+	usePath,
 	useMethod,
+	useQuery,
+	useHostname,
+	useBaseUrl,
+	useSetCookie,
 	useAppend,
 	useAttachment,
+	useHeader,
+	useResponseHeader,
 	useIsAcceptable,
 	useIsCharsetAcceptable,
 	useIsEncodingAcceptable,
-	useSetCookie,
+	useIsLanguageAcceptable,
+	useRange,
+	useProtocol,
+	useIsSecure,
+	useIP,
+	useIPs,
+	useSubdomains,
+	useIsXHR,
+	useSetLocals,
+	useHeadersSent,
 } = expressHooks;
 
 app.use(expressHooks.middleware());
@@ -37,7 +48,7 @@ app.get('/use-param/:name', (_, res) => {
 });
 
 app.get('/use-host-name', (_, res) => {
-	const hostName = useHostName();
+	const hostName = useHostname();
 	res.json({ hostName }).send();
 });
 
@@ -96,6 +107,52 @@ app.get('/use-is-language-acceptable', (_, res) => {
 	res.json({ isENAcceptable: !!isAcceptable });
 });
 
+app.get('/use-range', (_, res) => {
+	const range = useRange(1000);
+	res.json({ range });
+});
+
+app.get('/use-protocol', (_, res) => {
+	const protocol = useProtocol();
+	res.json({ protocol });
+});
+
+app.get('/use-is-secure', (_, res) => {
+	const isSecure = useIsSecure();
+	res.json({ isSecure });
+});
+
+app.get('/use-ip', (_, res) => {
+	const ip = useIP();
+	res.json({ ip });
+});
+
+app.get('/use-ips', (_, res) => {
+	const ips = useIPs();
+	res.json({ ips });
+});
+
+app.get('/use-subdomains', (_, res) => {
+	const subdomains = useSubdomains();
+	res.json({ subdomains });
+});
+
+app.get('/use-is-xhr', (_, res) => {
+	const isXHR = useIsXHR();
+	res.json({ isXHR });
+});
+
+app.get('/use-set-locals', (_, res) => {
+	useSetLocals({ name: 'Eddie' });
+	res.json({ locals: res.locals });
+});
+
+app.get('/use-headers-sent', (_, res) => {
+	const headersSent = useHeadersSent();
+	res.json({ headersSent });
+});
+
+app.enable('trust proxy');
 app.listen(3001, () => {
 	console.log('Server runned on port 3001');
 });

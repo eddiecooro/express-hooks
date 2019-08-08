@@ -4,7 +4,7 @@ import {
 	useRes,
 	useReq,
 	useParam,
-	useHostName,
+	useHostname,
 	usePath,
 	useMethod,
 	useQuery,
@@ -20,6 +20,7 @@ import {
 	useIsLanguageAcceptable,
 	useRange,
 	useProtocol,
+	useIsSecure,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -87,9 +88,9 @@ describe('Hook runs correctly when integrates with express', () => {
 		return expect(app).toNotExpressError(() => request(app).get('/?name=eddie'));
 	});
 
-	it('useHostName', () => {
+	it('useHostname', () => {
 		app.get('/', (_, res) => {
-			const hostName = useHostName();
+			const hostName = useHostname();
 			expect(hostName).toBe('127.0.0.1');
 			res.end();
 		});
@@ -256,6 +257,14 @@ describe('Hook runs correctly when integrates with express', () => {
 	it('useProtocol', () => {
 		app.get('/', (_, res) => {
 			expect(useProtocol()).toBe('http');
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
+	});
+
+	it('useIsSecure', () => {
+		app.get('/', (_, res) => {
+			expect(useIsSecure()).toBe(false);
 			res.end();
 		});
 		return expect(app).toNotExpressError(() => request(app).get('/'));

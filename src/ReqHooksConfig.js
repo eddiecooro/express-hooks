@@ -12,6 +12,7 @@ export default {
 	ip: 'useIP',
 	ips: 'useIPs',
 	subdomains: 'useSubdomains',
+	xhr: 'useIsXHR',
 	header: {
 		implementation: useHeader,
 		name: 'useHeader',
@@ -56,8 +57,4 @@ export default {
 		type: 'function',
 		name: 'useRange',
 	},
-	// path: 'usePath',
-	// hostname: 'useHostname',
-	// host: 'useHost',
-	// xhr: 'useXHR',
 };

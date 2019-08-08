@@ -19,6 +19,7 @@ import {
 	useIsEncodingAcceptable,
 	useIsLanguageAcceptable,
 	useRange,
+	useProtocol,
 } from '../Hooks';
 
 describe('Hook runs correctly when integrates with express', () => {
@@ -250,5 +251,13 @@ describe('Hook runs correctly when integrates with express', () => {
 				.get('/')
 				.set('Range', 'bytes=200-1000, 2000-6576,'),
 		);
+	});
+
+	it('useProtocol', () => {
+		app.get('/', (_, res) => {
+			expect(useProtocol()).toBe('http');
+			res.end();
+		});
+		return expect(app).toNotExpressError(() => request(app).get('/'));
 	});
 });

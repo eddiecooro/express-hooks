@@ -7,6 +7,7 @@ export default {
 	hostname: 'useHostname',
 	fresh: 'useIsFresh',
 	stale: 'useIsStale',
+	protocol: 'useProtocol',
 	header: {
 		implementation: useHeader,
 		name: 'useHeader',

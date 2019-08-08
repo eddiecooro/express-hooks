@@ -17,6 +17,7 @@ import {
 	useIsEncodingAcceptable,
 	useIsLanguageAcceptable,
 	useRange,
+	useProtocol,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -281,6 +282,14 @@ describe('hooks', () => {
 			expect(useRange(size)).toBe(returnValue);
 			expect(rangeFN).toHaveBeenCalledTimes(1);
 			expect(rangeFN).toHaveBeenCalledWith(size);
+		});
+	});
+
+	describe('useProtocol', () => {
+		it('Returns the protocol field', () => {
+			const protocol = 'https';
+			setDispatcher({ _req: { protocol } });
+			expect(useProtocol()).toBe(protocol);
 		});
 	});
 });

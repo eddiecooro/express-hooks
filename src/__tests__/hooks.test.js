@@ -25,6 +25,7 @@ import {
 	useIsXHR,
 	useSetLocals,
 	useHeadersSent,
+	useApp,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -369,6 +370,14 @@ describe('hooks', () => {
 			const headersSent = true;
 			setDispatcher({ _res: { headersSent } });
 			expect(useHeadersSent()).toBe(headersSent);
+		});
+	});
+
+	describe('useApp', () => {
+		it('Returns the app field from the res', () => {
+			const app = { name: 'APP' };
+			setDispatcher({ _res: { app } });
+			expect(useApp()).toBe(app);
 		});
 	});
 });

@@ -2,6 +2,7 @@ import { useResponseHeader, useSetLocals } from './ResHooksImplementation';
 
 module.exports = {
 	headersSent: 'useHeadersSent',
+	app: 'useApp',
 	cookie: {
 		type: 'function',
 		name: 'useSetCookie',

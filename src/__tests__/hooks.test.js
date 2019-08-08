@@ -23,6 +23,8 @@ import {
 	useIPs,
 	useSubdomains,
 	useIsXHR,
+	useSetLocals,
+	useHeadersSent,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -337,6 +339,31 @@ describe('hooks', () => {
 			expect(useIsXHR()).toBe(xhr);
 		});
 	});
+
+	describe('useSetLocals', () => {
+		it('Merges locals when merge option is not passed', () => {
+			const locals = { name: 'Eddie' };
+			const newLocals = { surname: 'CooRo' };
+			const res = { locals };
+			setDispatcher({ _res: res });
+
+			useSetLocals(newLocals);
+
+			expect(res.locals).toStrictEqual({ ...locals, ...newLocals });
+		});
+
+		it("Doesn't merge when merge option is false", () => {
+			const locals = { name: 'Eddie' };
+			const newLocals = { surname: 'CooRo' };
+			const res = { locals };
+			setDispatcher({ _res: res });
+
+			useSetLocals(newLocals, false);
+
+			expect(res.locals).toStrictEqual(newLocals);
+		});
+	});
+
 	describe('useHeadersSent', () => {
 		it('Returns the headersSent field', () => {
 			const headersSent = true;

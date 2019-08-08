@@ -1,4 +1,4 @@
-import { useResponseHeader } from './ResHooksImplementation';
+import { useResponseHeader, useSetLocals } from './ResHooksImplementation';
 
 module.exports = {
 	headersSent: 'useHeadersSent',
@@ -17,5 +17,9 @@ module.exports = {
 	get: {
 		implementation: useResponseHeader,
 		name: 'useResponseHeader',
+	},
+	locals: {
+		implementation: useSetLocals,
+		name: 'useSetLocals',
 	},
 };

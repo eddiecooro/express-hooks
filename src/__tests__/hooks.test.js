@@ -19,6 +19,7 @@ import {
 	useRange,
 	useProtocol,
 	useIsSecure,
+	useIP,
 } from '../Hooks';
 import { setDispatcher } from '../CurrentDispatcher';
 
@@ -299,6 +300,14 @@ describe('hooks', () => {
 			const secure = true;
 			setDispatcher({ _req: { secure } });
 			expect(useIsSecure()).toBe(secure);
+		});
+	});
+
+	describe('useIP', () => {
+		it('Returns the ip field', () => {
+			const ip = '127.0.0.1';
+			setDispatcher({ _req: { ip } });
+			expect(useIP()).toBe(ip);
 		});
 	});
 });

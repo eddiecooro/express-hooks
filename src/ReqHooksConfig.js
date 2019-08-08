@@ -9,6 +9,7 @@ export default {
 	stale: 'useIsStale',
 	protocol: 'useProtocol',
 	secure: 'useIsSecure',
+	ip: 'useIP',
 	header: {
 		implementation: useHeader,
 		name: 'useHeader',
@@ -53,7 +54,6 @@ export default {
 		type: 'function',
 		name: 'useRange',
 	},
-	// ip: 'useIP',
 	// ips: 'useIPs',
 	// subdomains: 'useSubdomains',
 	// path: 'usePath',
